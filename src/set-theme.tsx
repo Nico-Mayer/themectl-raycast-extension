@@ -1,33 +1,12 @@
 import { Action, ActionPanel, List, closeMainWindow, showToast, Toast } from "@raycast/api";
 import { execFile } from "child_process";
 import { useEffect, useState } from "react";
+import { getEnv } from "./utils";
 
-function getPathEntries() {
-  switch (process.platform) {
-    case "darwin":
-      return ["/usr/bin", "/bin", "/usr/sbin", "/sbin", `${process.env.HOME}/.local/bin`];
-    case "linux":
-      return ["/usr/local/bin", "/usr/bin", "/bin", `${process.env.HOME}/.local/bin`];
-    case "win32":
-      return [
-        "C:\\Windows\\System32",
-        "C:\\Windows",
-        process.env.LOCALAPPDATA ? `${process.env.LOCALAPPDATA}\\Programs` : "",
-      ].filter(Boolean);
-    default:
-      return [`${process.env.HOME}/.local/bin`];
-  }
-}
-
-const pathSeparator = process.platform === "win32" ? ";" : ":";
-
-const env = {
-  ...process.env,
-  PATH: [process.env.PATH, ...getPathEntries()].filter(Boolean).join(pathSeparator),
-};
+const env = getEnv();
 
 function setTheme(theme: string) {
-  execFile("huectl", ["set", theme], { env }, async (error, _stdout, stderr) => {
+  execFile("themectl", ["set", theme], { env }, async (error, _stdout, stderr) => {
     if (error) {
       await showToast({
         style: Toast.Style.Failure,
@@ -49,7 +28,7 @@ export default function Command() {
   const [items, setItems] = useState<string[]>([]);
 
   useEffect(() => {
-    execFile("huectl", ["ls"], { env }, (error, stdout) => {
+    execFile("themectl", ["ls"], { env }, (error, stdout) => {
       if (error) return;
 
       setItems(

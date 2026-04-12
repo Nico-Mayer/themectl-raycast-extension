@@ -1,8 +1,8 @@
 {
   "$schema": "https://www.raycast.com/schemas/extension.json",
-  "name": "huectl",
-  "title": "huectl",
-  "description": "",
+  "name": "themectl",
+  "title": "themectl",
+  "description": "Switch themes and wallpapers with themectl",
   "icon": "extension-icon.png",
   "author": "nico-mayer",
   "platforms": [
@@ -17,8 +17,14 @@
     {
       "name": "set-theme",
       "title": "Set Theme",
-      "description": "",
+      "description": "Select a theme from a list of installed themes",
       "mode": "view"
+    },
+    {
+      "name": "set-wallpaper",
+      "title": "Random Wallpaper",
+      "description": "Set random wallpaper for current theme",
+      "mode": "no-view"
     }
   ],
   "dependencies": {

@@ -1,1 +1,1 @@
-# huectl
+# themectl
