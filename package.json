@@ -21,9 +21,27 @@
       "mode": "view"
     },
     {
-      "name": "set-wallpaper",
+      "name": "random-wallpaper",
       "title": "Random Wallpaper",
       "description": "Set random wallpaper for current theme",
+      "mode": "no-view"
+    },
+    {
+      "name": "random-theme",
+      "title": "Random Theme",
+      "description": "Set random Theme",
+      "mode": "no-view"
+    },
+    {
+      "name": "random-light-theme",
+      "title": "Random Light Theme",
+      "description": "Set random light theme",
+      "mode": "no-view"
+    },
+    {
+      "name": "random-dark-theme",
+      "title": "Random Dark Theme",
+      "description": "Set random dark theme",
       "mode": "no-view"
     }
   ],
