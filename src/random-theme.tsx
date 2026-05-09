@@ -7,7 +7,7 @@ const execFileAsync = promisify(execFile);
 
 export default async function Command() {
   try {
-    await execFileAsync("themectl", ["random"], { env: getEnv() });
+    await execFileAsync("themectl", ["set", "random"], { env: getEnv() });
 
     await closeMainWindow();
     await showToast({
