@@ -1,7 +1,7 @@
 function getPathEntries() {
   switch (process.platform) {
     case "darwin":
-      return ["/usr/bin", "/bin", "/usr/sbin", "/sbin", `${process.env.HOME}/.local/bin`];
+      return ["/usr/bin", "/usr/local/bin", "/bin", "/usr/sbin", "/sbin", `${process.env.HOME}/.local/bin`];
     case "linux":
       return ["/usr/local/bin", "/usr/bin", "/bin", `${process.env.HOME}/.local/bin`];
     case "win32":
