@@ -1,3 +1,6 @@
+import os from "node:os";
+import path from "node:path";
+
 function getPathEntries() {
   switch (process.platform) {
     case "darwin":
@@ -17,11 +20,13 @@ function getPathEntries() {
 
 const pathSeparator = process.platform === "win32" ? ";" : ":";
 
-const env = {
-  ...process.env,
-  PATH: [process.env.PATH, ...getPathEntries()].filter(Boolean).join(pathSeparator),
-};
-
 export function getEnv() {
-  return env;
+  const appData = process.env.APPDATA || path.join(os.homedir(), "AppData", "Roaming");
+
+  process.env.APPDATA = appData;
+
+  return {
+    ...process.env,
+    PATH: [process.env.PATH, ...getPathEntries()].filter(Boolean).join(pathSeparator),
+  };
 }
