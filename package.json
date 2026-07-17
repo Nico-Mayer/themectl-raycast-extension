@@ -27,6 +27,12 @@
       "mode": "no-view"
     },
     {
+      "name": "pick-wallpaper",
+      "title": "Pick Wallpaper",
+      "description": "Pick a Wallpaper for your current theme",
+      "mode": "view"
+    },
+    {
       "name": "random-theme",
       "title": "Random Theme",
       "description": "Set random Theme",
