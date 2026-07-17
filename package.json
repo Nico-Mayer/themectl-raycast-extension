@@ -1,9 +1,9 @@
 {
   "$schema": "https://www.raycast.com/schemas/extension.json",
   "name": "themectl",
-  "title": "themectl",
+  "title": "Themectl",
   "description": "Switch themes and wallpapers with themectl",
-  "icon": "themectl-logo.svg",
+  "icon": "themectl-logo.png",
   "author": "nico-mayer",
   "platforms": [
     "macOS",

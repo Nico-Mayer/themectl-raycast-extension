@@ -1,54 +1,29 @@
-import { Action, ActionPanel, List, closeMainWindow, showToast, Toast } from "@raycast/api";
-import { execFile } from "child_process";
-import { useEffect, useState } from "react";
-import { getEnv } from "./utils";
-
-const env = getEnv();
-
-function setTheme(theme: string) {
-  execFile("themectl", ["set", theme], { env }, async (error, _stdout, stderr) => {
-    if (error) {
-      await showToast({
-        style: Toast.Style.Failure,
-        title: "Failed to set theme",
-        message: stderr || error.message,
-      });
-      return;
-    }
-
-    await closeMainWindow();
-    await showToast({
-      style: Toast.Style.Success,
-      title: `Set theme: ${theme}`,
-    });
-  });
-}
+import { Action, ActionPanel, List } from "@raycast/api";
+import { useExec } from "@raycast/utils";
+import { useMemo } from "react";
+import { env, runThemectl } from "./utils";
 
 export default function Command() {
-  const [items, setItems] = useState<string[]>([]);
+  const { data, isLoading } = useExec("themectl", ["ls"], { env, initialData: "" });
 
-  useEffect(() => {
-    execFile("themectl", ["ls"], { env }, (error, stdout) => {
-      if (error) return;
-
-      setItems(
-        stdout
-          .split("\n")
-          .map((line) => line.trim())
-          .filter(Boolean),
-      );
-    });
-  }, []);
+  const items = useMemo(
+    () =>
+      data
+        .split("\n")
+        .map((line) => line.trim())
+        .filter(Boolean),
+    [data],
+  );
 
   return (
-    <List>
+    <List isLoading={isLoading}>
       {items.map((item) => (
         <List.Item
           key={item}
           title={item}
           actions={
             <ActionPanel>
-              <Action title="Set Theme" onAction={() => setTheme(item)} />
+              <Action title="Set Theme" onAction={() => runThemectl(["set", item], `Set theme: ${item}`)} />
               <Action.CopyToClipboard content={item} />
             </ActionPanel>
           }
