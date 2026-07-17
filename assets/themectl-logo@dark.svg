@@ -1,0 +1,12 @@
+<svg width="128" height="128" viewBox="0 0 128 128" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="themectl logo">
+  <defs>
+    <linearGradient id="prompt" x1="0" y1="40" x2="0" y2="88" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#EA5638"/>
+      <stop offset="0.35" stop-color="#E0940F"/>
+      <stop offset="0.65" stop-color="#148F6B"/>
+      <stop offset="1" stop-color="#6E63DE"/>
+    </linearGradient>
+  </defs>
+  <rect x="0.5" y="0.5" width="127" height="127" rx="28.5" fill="#F4F3EE" stroke="#E4E2DA" stroke-width="1"/>
+  <polyline points="50,40 78,64 50,88" fill="none" stroke="url(#prompt)" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
