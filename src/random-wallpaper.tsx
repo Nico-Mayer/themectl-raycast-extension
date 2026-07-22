@@ -1,5 +1,5 @@
 import { runThemectl } from "./utils";
 
 export default async function Command() {
-  await runThemectl(["wall", "set", "-r"], "Set wallpaper");
+  await runThemectl(["wall", "set", "-r"], "Set wallpaper", "Setting random wallpaper");
 }

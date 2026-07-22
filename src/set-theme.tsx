@@ -44,7 +44,10 @@ export default function Command() {
               accessories={[{ tag: item.appearance }]}
               actions={
                 <ActionPanel>
-                  <Action title="Set Theme" onAction={() => runThemectl(["set", item.id], `Set theme: ${item.id}`)} />
+                  <Action
+                    title="Set Theme"
+                    onAction={() => runThemectl(["set", item.id], `Set theme: ${item.id}`, `Setting theme: ${item.id}`)}
+                  />
                   <Action.CopyToClipboard title="Copy Theme ID" content={item.id} />
                 </ActionPanel>
               }

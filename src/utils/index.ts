@@ -37,18 +37,17 @@ function buildEnv() {
 
 export const env = buildEnv();
 
-export async function runThemectl(args: string[], successTitle: string) {
+export async function runThemectl(args: string[], successTitle: string, loadingTitle?: string) {
+  const toast = await showToast({ style: Toast.Style.Animated, title: loadingTitle ?? `${successTitle}…` });
   try {
     await execFileAsync("themectl", args, { env });
+    toast.style = Toast.Style.Success;
+    toast.title = successTitle;
     await closeMainWindow();
-    await showToast({ style: Toast.Style.Success, title: successTitle });
   } catch (error: unknown) {
     console.error("Error executing themectl:", error);
-    await closeMainWindow();
-    await showToast({
-      style: Toast.Style.Failure,
-      title: "Error",
-      message: error instanceof Error ? error.message : String(error),
-    });
+    toast.style = Toast.Style.Failure;
+    toast.title = "Error";
+    toast.message = error instanceof Error ? error.message : String(error);
   }
 }

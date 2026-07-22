@@ -36,7 +36,9 @@ export default function Command() {
               <ActionPanel>
                 <Action
                   title="Set Wallpaper"
-                  onAction={() => runThemectl(["wall", "set", imagePath], `Set wallpaper: ${name}`)}
+                  onAction={() =>
+                    runThemectl(["wall", "set", imagePath], `Set wallpaper: ${name}`, `Setting wallpaper: ${name}`)
+                  }
                 />
                 <Action.CopyToClipboard title="Copy Path" content={imagePath} />
                 <Action.ShowInFinder path={imagePath} />
