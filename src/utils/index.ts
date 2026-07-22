@@ -29,6 +29,9 @@ function buildEnv() {
   const appData = process.env.APPDATA || path.join(os.homedir(), "AppData", "Roaming");
   process.env.APPDATA = appData;
 
+  const localAppData = process.env.LOCALAPPDATA || path.join(os.homedir(), "AppData", "Local");
+  process.env.LOCALAPPDATA = localAppData;
+
   return {
     ...process.env,
     PATH: [process.env.PATH, ...getPathEntries()].filter(Boolean).join(pathSeparator),
