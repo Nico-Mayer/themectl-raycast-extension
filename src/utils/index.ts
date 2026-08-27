@@ -1,4 +1,4 @@
-import { closeMainWindow, showToast, Toast } from "@raycast/api";
+import { closeMainWindow, getPreferenceValues, showToast, Toast } from "@raycast/api";
 import { execFile } from "node:child_process";
 import os from "node:os";
 import path from "node:path";
@@ -6,35 +6,15 @@ import { promisify } from "node:util";
 
 const execFileAsync = promisify(execFile);
 
-function getPathEntries() {
-  switch (process.platform) {
-    case "darwin":
-      return ["/usr/bin", "/usr/local/bin", "/bin", "/usr/sbin", "/sbin", `${process.env.HOME}/.local/bin`];
-    case "linux":
-      return ["/usr/local/bin", "/usr/bin", "/bin", `${process.env.HOME}/.local/bin`];
-    case "win32":
-      return [
-        "C:\\Windows\\System32",
-        "C:\\Windows",
-        process.env.LOCALAPPDATA ? `${process.env.LOCALAPPDATA}\\Programs` : "",
-      ].filter(Boolean);
-    default:
-      return [`${process.env.HOME}/.local/bin`];
-  }
-}
+export const themectlPath = getPreferenceValues<Preferences>().themectlPath;
 
-const pathSeparator = process.platform === "win32" ? ";" : ":";
-
-function buildEnv() {
-  const appData = process.env.APPDATA || path.join(os.homedir(), "AppData", "Roaming");
-  process.env.APPDATA = appData;
-
-  const localAppData = process.env.LOCALAPPDATA || path.join(os.homedir(), "AppData", "Local");
-  process.env.LOCALAPPDATA = localAppData;
-
+function buildEnv(): NodeJS.ProcessEnv {
+  if (process.platform !== "win32") return process.env;
+  // themectl resolves its config dir from these; Raycast may launch without them set.
   return {
     ...process.env,
-    PATH: [process.env.PATH, ...getPathEntries()].filter(Boolean).join(pathSeparator),
+    APPDATA: process.env.APPDATA ?? path.join(os.homedir(), "AppData", "Roaming"),
+    LOCALAPPDATA: process.env.LOCALAPPDATA ?? path.join(os.homedir(), "AppData", "Local"),
   };
 }
 
@@ -43,7 +23,7 @@ export const env = buildEnv();
 export async function runThemectl(args: string[], successTitle: string, loadingTitle?: string) {
   const toast = await showToast({ style: Toast.Style.Animated, title: loadingTitle ?? `${successTitle}…` });
   try {
-    await execFileAsync("themectl", args, { env });
+    await execFileAsync(themectlPath, args, { env });
     toast.style = Toast.Style.Success;
     toast.title = successTitle;
     await closeMainWindow();

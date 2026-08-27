@@ -1,7 +1,7 @@
 import { Action, ActionPanel, Icon, List } from "@raycast/api";
 import { useExec } from "@raycast/utils";
 import { useMemo } from "react";
-import { env, runThemectl } from "./utils";
+import { env, runThemectl, themectlPath } from "./utils";
 
 type themeJSON = {
   id: string;
@@ -11,7 +11,7 @@ type themeJSON = {
 };
 
 export default function Command() {
-  const { data, isLoading } = useExec("themectl", ["ls", "--json"], { env, initialData: "" });
+  const { data, isLoading } = useExec(themectlPath, ["ls", "--json"], { env, initialData: "" });
 
   const groups = useMemo(() => {
     let items: themeJSON[] = [];

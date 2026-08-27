@@ -51,6 +51,16 @@
       "mode": "no-view"
     }
   ],
+  "preferences": [
+    {
+      "name": "themectlPath",
+      "title": "Themectl Executable",
+      "description": "Absolute path to the themectl executable",
+      "type": "textfield",
+      "placeholder": "/usr/local/bin/themectl",
+      "required": true
+    }
+  ],
   "dependencies": {
     "@raycast/api": "^1.104.23",
     "@raycast/utils": "^2.2.7"

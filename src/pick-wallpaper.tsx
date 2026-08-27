@@ -3,10 +3,10 @@ import { useExec } from "@raycast/utils";
 import { useMemo } from "react";
 import path from "node:path";
 import { pathToFileURL } from "node:url";
-import { env, runThemectl } from "./utils";
+import { env, runThemectl, themectlPath } from "./utils";
 
 export default function Command() {
-  const { data, isLoading } = useExec("themectl", ["wall", "list"], { env, initialData: "" });
+  const { data, isLoading } = useExec(themectlPath, ["wall", "list"], { env, initialData: "" });
 
   const images = useMemo(() => {
     const seen = new Set<string>();
