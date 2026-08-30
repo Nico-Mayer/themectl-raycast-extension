@@ -1,0 +1,10 @@
+{
+  "extends": "./tsconfig.json",
+  "include": ["src/utils/cli.ts", "src/utils/errors.ts", "src/utils/cli.test.ts"],
+  "compilerOptions": {
+    "isolatedModules": false,
+    "outDir": ".test-build",
+    "rootDir": ".",
+    "sourceMap": true
+  }
+}

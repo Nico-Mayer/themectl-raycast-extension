@@ -1,7 +1,7 @@
 import { Action, ActionPanel, Icon, List } from "@raycast/api";
-import { useExec } from "@raycast/utils";
+import { usePromise } from "@raycast/utils";
 import { useMemo } from "react";
-import { env, runThemectl, themectlPath } from "./utils";
+import { executeThemectl, runThemectl, showThemectlError } from "./utils";
 
 type themeJSON = {
   id: string;
@@ -10,13 +10,21 @@ type themeJSON = {
   appearance: string;
 };
 
+async function listThemes() {
+  return executeThemectl(["ls", "--json"]);
+}
+
 export default function Command() {
-  const { data, isLoading } = useExec(themectlPath, ["ls", "--json"], { env, initialData: "" });
+  const { data, isLoading } = usePromise(listThemes, [], {
+    onError(error) {
+      void showThemectlError(error);
+    },
+  });
 
   const groups = useMemo(() => {
     let items: themeJSON[] = [];
     try {
-      items = data ? JSON.parse(data) : [];
+      items = data?.stdout ? JSON.parse(data.stdout) : [];
     } catch {
       items = [];
     }

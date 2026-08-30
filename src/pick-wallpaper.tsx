@@ -1,16 +1,24 @@
 import { Action, ActionPanel, Grid } from "@raycast/api";
-import { useExec } from "@raycast/utils";
+import { usePromise } from "@raycast/utils";
 import { useMemo } from "react";
 import path from "node:path";
 import { pathToFileURL } from "node:url";
-import { env, runThemectl, themectlPath } from "./utils";
+import { executeThemectl, runThemectl, showThemectlError } from "./utils";
+
+async function listWallpapers() {
+  return executeThemectl(["wall", "list"]);
+}
 
 export default function Command() {
-  const { data, isLoading } = useExec(themectlPath, ["wall", "list"], { env, initialData: "" });
+  const { data, isLoading } = usePromise(listWallpapers, [], {
+    onError(error) {
+      void showThemectlError(error);
+    },
+  });
 
   const images = useMemo(() => {
     const seen = new Set<string>();
-    return data
+    return (data?.stdout ?? "")
       .split("\n")
       .map((p) => p.trim())
       .filter((p) => p && !seen.has(p) && seen.add(p));
